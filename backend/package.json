@@ -1,24 +1,33 @@
 {
   "name": "ai-test-case-generator-backend",
   "version": "1.0.0",
-  "description": "Node.js Express backend server for AI-Powered Test Case Generator",
+  "description": "Node.js Express backend server for AI-Powered Test Case Generator with Google Gemini AI",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "db:view": "node scripts/viewDb.js",
+    "db:migrate-mongo": "node scripts/migrateToMongo.js"
   },
   "keywords": [
     "express",
     "test-case-generator",
+    "gemini-ai",
     "qa",
     "api"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.22.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.10.3",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
