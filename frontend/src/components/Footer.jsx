@@ -22,10 +22,10 @@ export default function Footer() {
             <span>— React + Express Architecture</span>
           </div>
 
-          {/* Center Viva / College Tag */}
+          {/* Center Platform Tag */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
             <Code2 className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Final Year College Project Defense & Viva Demo</span>
+            <span>Enterprise Software Quality Assurance Platform</span>
           </div>
 
           {/* Right copyright */}

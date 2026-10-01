@@ -95,25 +95,7 @@ export default function AccountModal({ isOpen, onClose, user, onUpgradeClick, on
 
         {/* Demo Helper & Logout Actions */}
         <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-700">
-          {onSwitchRole && (
-            <button
-              type="button"
-              onClick={() => { onSwitchRole(); onClose(); }}
-              className="w-full py-2 px-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 border border-purple-200/60 dark:border-purple-800/60"
-            >
-              <Shield className="w-3.5 h-3.5 text-purple-500" />
-              <span>{isAdmin ? 'Switch Role: QA Automation Lead' : 'Switch Role: System Administrator'}</span>
-            </button>
-          )}
 
-          <button
-            type="button"
-            onClick={() => { onResetCredits(); onClose(); }}
-            className="w-full py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all flex items-center justify-center gap-1.5"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>Reset Demo Usage (Reset to 0)</span>
-          </button>
 
           <button
             type="button"

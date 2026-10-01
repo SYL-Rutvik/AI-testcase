@@ -67,71 +67,9 @@ export default function AdminPortalPage({
       } else {
         throw new Error(data.message || 'Invalid users response');
       }
-    } catch (e) {
-      console.warn('Failed to fetch admin users, using fallback mock list', e);
-      // Fallback local list
-      setUsers([
-        {
-          id: 'USR-101',
-          name: 'Rutvik Shiyal',
-          email: 'rutvik.shiyal@rku.ac.in',
-          role: 'QA Automation Lead',
-          plan: 'Free Tier',
-          generationsUsed: 3,
-          freeLimit: 10,
-          status: 'Active',
-          joinedDate: '2026-08-15',
-          avatar: 'RS'
-        },
-        {
-          id: 'USR-102',
-          name: 'Prof. Jay Pithadiya',
-          email: 'jay.pithadiya@rku.ac.in',
-          role: 'Administrator / Project Guide',
-          plan: 'Enterprise',
-          generationsUsed: 42,
-          freeLimit: 999999,
-          status: 'Active',
-          joinedDate: '2026-08-01',
-          avatar: 'JP'
-        },
-        {
-          id: 'USR-103',
-          name: 'Priya Sharma',
-          email: 'priya.s@techcorp.io',
-          role: 'Senior QA Analyst',
-          plan: 'Pro',
-          generationsUsed: 18,
-          freeLimit: 999999,
-          status: 'Active',
-          joinedDate: '2026-08-18',
-          avatar: 'PS'
-        },
-        {
-          id: 'USR-104',
-          name: 'Harsh Patel',
-          email: 'harsh.p@student.rku.ac.in',
-          role: 'Software Developer',
-          plan: 'Free Tier',
-          generationsUsed: 9,
-          freeLimit: 10,
-          status: 'Active',
-          joinedDate: '2026-08-22',
-          avatar: 'HP'
-        },
-        {
-          id: 'USR-105',
-          name: 'Demo Intern',
-          email: 'intern@rku.ac.in',
-          role: 'Junior QA Tester',
-          plan: 'Free Tier',
-          generationsUsed: 10,
-          freeLimit: 10,
-          status: 'Suspended',
-          joinedDate: '2026-08-25',
-          avatar: 'DI'
-        }
-      ]);
+    } catch (err) {
+      console.error('Failed to fetch admin users from database:', err.message);
+      setUsers([]);
     } finally {
       setIsLoadingUsers(false);
     }
@@ -315,36 +253,15 @@ export default function AdminPortalPage({
               Platform Administration & User Governance
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-              Manage multi-tenant accounts, subscription limits, Google Gemini telemetry, and project-wide zero-friction permissions for CE738 Final Year Demonstration.
+              Manage multi-tenant accounts, subscription limits, Google Gemini telemetry, and project-wide security governance.
             </p>
           </div>
 
-          {/* Quick Role Switcher Banner */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-            {!isAdmin ? (
-              <button
-                type="button"
-                onClick={onSwitchToAdminRole}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all active:scale-95"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Switch to Administrator Session</span>
-              </button>
-            ) : (
-              <div className="flex items-center gap-2 bg-emerald-950/60 border border-emerald-700/60 px-3.5 py-2 rounded-xl text-emerald-300 text-xs font-bold">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Admin Authority Active ({currentUser?.name || 'Rutvik Shiyal'})</span>
-              </div>
-            )}
-            <button
-              type="button"
-              onClick={handleAllowAllPermissions}
-              className="flex items-center justify-center gap-2 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl transition-all"
-              title="Automatically sets all permissions to allowed so no confirmation modals block your workflow"
-            >
-              <Zap className="w-4 h-4 text-amber-400" />
-              <span>Allow All Permissions (Yes)</span>
-            </button>
+            <div className="flex items-center gap-2 bg-emerald-950/60 border border-emerald-700/60 px-3.5 py-2 rounded-xl text-emerald-300 text-xs font-bold">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span>Admin Authority Active ({currentUser?.name || 'Administrator'})</span>
+            </div>
           </div>
         </div>
       </div>

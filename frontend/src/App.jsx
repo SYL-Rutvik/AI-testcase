@@ -293,60 +293,16 @@ function AppContent() {
     addToast(`Upgraded to ${planName} Plan! Unlimited test generations activated! ⚡`, 'success');
   };
 
-  const handleResetCredits = () => {
-    setGuestGenerationsCount(0);
-    if (user) {
-      setUser(prev => ({ ...prev, generationsUsed: 0, plan: 'Free Tier', freeLimit: 10 }));
-    }
-    addToast('Demo usage reset! You can now test the complete 1-guest + 10-free limit cycle.', 'info');
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('ai_auth_token');
     localStorage.removeItem('ai_test_user');
     setUser(null);
     setGuestGenerationsCount(0);
     setActiveTab('dashboard');
-    addToast('Signed out successfully. Returned to Guest Mode.', 'info');
+    addToast('Signed out successfully.', 'info');
   };
 
-  // 1-Click Role Switcher for Viva Demo (QA Lead <-> Super Admin)
-  const handleSwitchToAdminRole = () => {
-    if (user) {
-      const isCurrentAdmin = (user.role || '').toLowerCase().includes('admin');
-      const updatedRole = isCurrentAdmin ? 'user' : 'admin';
-      const updatedRoleName = isCurrentAdmin ? 'QA Automation Lead' : 'Administrator';
-      const updatedPlan = isCurrentAdmin ? 'Free Tier' : 'Enterprise';
-      const updatedUser = {
-        ...user,
-        role: updatedRole,
-        plan: updatedPlan,
-        freeLimit: updatedPlan === 'Enterprise' ? 999999 : 10
-      };
-      setUser(updatedUser);
-      if (updatedRole === 'admin') {
-        setActiveTab('admin');
-      } else {
-        setActiveTab('dashboard');
-      }
-      addToast(`Switched active role to ${updatedRoleName}!`, 'success');
-    } else {
-      const adminUser = {
-        id: 'USR-ADMIN-01',
-        name: 'Prof. Jay Pithadiya',
-        email: 'admin@rku.ac.in',
-        role: 'admin',
-        plan: 'Enterprise',
-        generationsUsed: 0,
-        freeLimit: 999999,
-        avatar: 'JP',
-        provider: 'demo'
-      };
-      setUser(adminUser);
-      setActiveTab('admin');
-      addToast('Logged in as Administrator (Prof. Jay Pithadiya)', 'success');
-    }
-  };
+
 
   // Add custom test case
   const handleAddTestCase = (newCase) => {
@@ -540,11 +496,11 @@ function AppContent() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   type="button"
-                  onClick={() => handleSwitchToAdminRole()}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-md transition-all flex items-center justify-center gap-1.5"
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl font-bold text-xs bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-all flex items-center justify-center gap-1.5"
                 >
                   <KeyRound className="w-3.5 h-3.5" />
-                  <span>Switch to Admin Account (Demo)</span>
+                  <span>Sign In with Admin Account</span>
                 </button>
                 <button
                   type="button"
@@ -558,7 +514,6 @@ function AppContent() {
           ) : (
             <AdminPortalPage
               currentUser={user}
-              onSwitchToAdminRole={handleSwitchToAdminRole}
               onNavigateToGenerator={() => setActiveTab('generate')}
             />
           )
@@ -617,7 +572,6 @@ function AppContent() {
         isOpen={isPricingModalOpen}
         onClose={() => setIsPricingModalOpen(false)}
         onUpgradeSuccess={handleUpgradeSuccess}
-        onResetCredits={handleResetCredits}
         currentPlan={user?.plan || 'Free Tier'}
         usageCount={user?.generationsUsed || 10}
         user={user}
@@ -629,9 +583,7 @@ function AppContent() {
         onClose={() => setIsAccountModalOpen(false)}
         user={user}
         onUpgradeClick={() => setIsPricingModalOpen(true)}
-        onResetCredits={handleResetCredits}
         onLogout={handleLogout}
-        onSwitchRole={handleSwitchToAdminRole}
       />
 
     </div>

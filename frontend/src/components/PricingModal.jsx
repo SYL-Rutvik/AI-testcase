@@ -100,26 +100,7 @@ export default function PricingModal({
     }
   };
 
-  const handleResetForDemo = async () => {
-    try {
-      const token = localStorage.getItem('ai_auth_token');
-      const headers = { 'Content-Type': 'application/json' };
-      if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      await fetch('http://localhost:5000/api/plans/reset-credits', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ userId: user?.id })
-      });
-    } catch (e) {
-      console.warn('Backend reset credits offline fallback');
-    }
-
-    if (onResetCredits) {
-      onResetCredits();
-      onClose();
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs animate-fade-in overflow-y-auto">
@@ -238,20 +219,7 @@ export default function PricingModal({
           </div>
         )}
 
-        {/* Demo Mode Viva Helper */}
-        <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-700/60 border border-slate-200 dark:border-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-            <RefreshCcw className="w-4 h-4 text-indigo-500" />
-            <span><strong>Viva Evaluation Helper:</strong> Reset generations count to test the 10-quota freemium cycle again?</span>
-          </div>
-          <button
-            type="button"
-            onClick={handleResetForDemo}
-            className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-bold border border-slate-200 dark:border-slate-700 hover:bg-indigo-50 transition-colors shrink-0"
-          >
-            Reset Free Credits to 0
-          </button>
-        </div>
+
 
         {/* ======================================================== */}
         {/* POP-UP MODAL: PLAN DETAILS & IN-APP CONFIRMATION         */}

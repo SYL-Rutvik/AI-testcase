@@ -170,61 +170,7 @@ export default function AuthModal({
     }
   };
 
-  // 1-Click Quick Demo Login as Administrator (Prof. Jay Pithadiya)
-  const handleQuickAdminDemoLogin = async () => {
-    setEmail('admin@rku.ac.in');
-    setPassword('Admin@123');
-    setError('');
-    setIsSubmitting(true);
 
-    try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'admin@rku.ac.in', password: 'Admin@123' })
-      });
-      const data = await res.json();
-      if (data.success) {
-        localStorage.setItem('ai_auth_token', data.token);
-        onLoginSuccess(data.user, data.token, 'admin');
-        onClose();
-      } else {
-        throw new Error(data.message);
-      }
-    } catch (err) {
-      setError(err.message || 'Admin login failed');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // 1-Click Quick Demo Login as Regular QA User (Rutvik Shiyal)
-  const handleQuickUserDemoLogin = async () => {
-    setEmail('rutvik.shiyal@rku.ac.in');
-    setPassword('User@123');
-    setError('');
-    setIsSubmitting(true);
-
-    try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'rutvik.shiyal@rku.ac.in', password: 'User@123' })
-      });
-      const data = await res.json();
-      if (data.success) {
-        localStorage.setItem('ai_auth_token', data.token);
-        onLoginSuccess(data.user, data.token, 'dashboard');
-        onClose();
-      } else {
-        throw new Error(data.message);
-      }
-    } catch (err) {
-      setError(err.message || 'User login failed');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
@@ -395,32 +341,7 @@ export default function AuthModal({
           </button>
         </form>
 
-        {/* 1-Click Quick Demo Login Helpers */}
-        <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 space-y-2">
-          <p className="text-[10px] font-semibold text-slate-400 text-center uppercase tracking-wider mb-2">
-            Viva Evaluation: 1-Click Role-Based Logins
-          </p>
 
-          <button
-            type="button"
-            onClick={handleQuickUserDemoLogin}
-            disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 transition-colors border border-indigo-200/50 dark:border-indigo-800/50"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Login as User (Rutvik Shiyal - QA Lead) ➔ User Dashboard</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleQuickAdminDemoLogin}
-            disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/50 hover:bg-purple-100 transition-colors border border-purple-200/50 dark:border-purple-800/50"
-          >
-            <Shield className="w-3.5 h-3.5 text-purple-500" />
-            <span>Login as Admin (Prof. Jay Pithadiya) ➔ Admin Portal</span>
-          </button>
-        </div>
 
       </div>
     </div>
